@@ -1,4 +1,4 @@
-import {useState} from "react"
+import { useState } from "react"
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
@@ -10,13 +10,17 @@ export default function Home() {
   const [subject, setSubject] = useState("")
   const [text, setText] = useState("");
 
-  async function sendEmail(){
+  async function sendEmail() {
     const response = await axios.post("/api/mail", {
       to: to,
       subject: subject,
       text: text
     })
     console.log(response.data)
+    alert('Email send successfully')
+    setTo("")
+    setSubject("")
+    setText("")
   }
 
   return (
@@ -32,21 +36,22 @@ export default function Home() {
       <div className={styles.mailbox}>
         <div>
           <input type="email" className={styles.inputEmail} placeholder="Enter Email"
-           value={to}
-           onChange={(e)=>{setTo(e.target.value)}}
-           required/>
+            value={to}
+            onChange={(e) => { setTo(e.target.value) }}
+            required />
         </div>
 
         <div>
           <input type="text" className={styles.inputSubject} placeholder="Enter Subject"
-          value={subject}
-          onChange={(e)=>{setSubject(e.target.value)}}
+            value={subject}
+            onChange={(e) => { setSubject(e.target.value) }}
           />
         </div>
 
         <div>
           <textarea className={styles.inputText}
-          onChange={(e)=>{setText(e.target.value)}}
+          value={text}
+            onChange={(e) => { setText(e.target.value) }}
           ></textarea>
         </div>
         <button type="button" onClick={sendEmail} className={styles.buttonSend}>Send Email</button>
